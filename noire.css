@@ -1,0 +1,180 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  background-color: #002b36;
+  color: #f0f6fc;
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 1.75;
+  font-kerning: auto;
+  padding: 50px 50px 50px 50px;
+}
+
+.wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: auto;
+}
+
+@media screen and (max-width: 767px) {
+  body {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+  }
+}
+
+a:link {
+  color: #79c0ff;
+}
+
+a:visited {
+  color: #ff8000;
+}
+
+a:hover {
+  color: #d2a8ff;
+}
+
+a:active {
+  color: #ff0000;
+}
+
+.def {
+  position: relative;
+  margin-top: 41px;
+  margin-bottom: 10px;
+  padding: 0.5em 1em;
+  border: 5px solid #62c1ce;
+}
+
+.def legend {
+  position: absolute;
+  display: inline-block;
+  top: -31px;
+  left: -5px;
+  padding: 3px 10px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 17px;
+  background: #62c1ce;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+
+.def div {
+  text-indent: 2em;
+  margin: 5px;
+  padding: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .def div {
+    width: 400px;
+  }
+}
+
+.thm {
+  position: relative;
+  margin-top: 41px;
+  margin-bottom: 10px;
+  padding: 0.5em 1em;
+  border: 5px solid #ff0099;
+}
+
+.thm legend {
+  position: absolute;
+  display: inline-block;
+  top: -31px;
+  left: -5px;
+  padding: 3px 10px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 17px;
+  background: #ff0099;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+
+.thm div {
+  text-indent: 2em;
+  margin: 0;
+  padding: 10px;
+}
+
+@media screen and (max-width: 767px) {
+  .thm div {
+    width: 400px;
+  }
+}
+
+.proof {
+  position: relative;
+  padding: 0.25em 1em;
+  margin: 2em 0;
+  top: 0;
+}
+
+.proof:before, .proof:after {
+  position: absolute;
+  top: 0;
+  content: '';
+  width: 10px;
+  height: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.proof:before {
+  border-left: dotted 2px #15adc1;
+  border-top: dotted 2px #15adc1;
+  border-bottom: dotted 2px #15adc1;
+  left: 0;
+}
+
+.proof:after {
+  border-top: dotted 2px #15adc1;
+  border-right: dotted 2px #15adc1;
+  border-bottom: dotted 2px #15adc1;
+  right: 0;
+}
+
+.proof summary {
+  font-weight: bold;
+}
+
+.proof div {
+  text-indent: 2em;
+  padding: 10px 5px 0 5px;
+  margin: 0;
+}
+
+ol {
+  counter-reset: cnt;
+}
+
+ol li {
+  list-style-type: none;
+  counter-increment: cnt;
+  position: relative;
+  text-indent: 0;
+  padding-left: 0;
+}
+
+ol li:before {
+  content: "(" counter(cnt, lower-roman) ")";
+  display: inline-block;
+  margin-left: -4.5em;
+  width: 4em;
+  text-align: right;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+body {
+  -webkit-print-color-adjust: exact;
+}

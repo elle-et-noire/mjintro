@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+
+<head>
+  <title>MathJax 入門</title>
+
+  <script src="mathjax-config.js" async></script>
+  <link rel="stylesheet" href="noire.css">
+  <link rel="icon" type="image/png" href="mathjax.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/solarized-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+  <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+</head>
+
+<body>
+  <h1 align="center">MathJax 入門</h1>
+  <h2>MathJax とは</h2>
+  数式を Web ブラウザ上で表示するオープンソース Javascript ライブラリ。$\LaTeX$ と（ほぼ）同じコマンドが使える<br>
+  <a href="https://github.com/mathjax/MathJax" target="_blank" rel="noopener noreferrer">MathJax のレポジトリ</a><br>
+  <a href="https://www.mathjax.org/" target="_blank" rel="noopener noreferrer">公式ページ</a><br>
+  <a href="http://docs.mathjax.org/en/latest/" target="_blank" rel="noopener noreferrer">公式ドキュメント</a>
+  <h2>表示例</h2>
+  2次方程式 $ax^2+bx+c=0$ の解の公式は\eqref{eq:solver}である。
+  \begin{align}
+  x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}\label{eq:solver}
+  \end{align}
+  \begin{align}
+  \href{https://ja.wikipedia.org/wiki/%E3%82%AC%E3%82%A6%E3%82%B9%E7%A9%8D%E5%88%86}{\int_{-\infty}^\infty
+  e^{-x^2}\,dx=\sqrt{\pi}}
+  \end{align}
+  \begin{align}
+  \mathtip{e^{ix}}{\cos x+i\sin x}
+  \end{align}
+  \begin{align}
+  \toggle{\sin\alpha\cos\beta=\dfrac{\sin(\alpha+\beta)+\sin(\alpha-\beta)}{2}\ \text{正弦×余弦}}
+  {\cos\alpha\cos\beta=\dfrac{\cos(\alpha+\beta)+\cos(\alpha-\beta)}{2}\ \text{余弦×余弦}}
+  {\sin\alpha\sin\beta=-\dfrac{\cos(\alpha+\beta)-\cos(\alpha-\beta)}{2}\ \text{正弦×正弦}}\endtoggle
+  \end{align}
+  <h2>使い方</h2>
+  以下のような js ファイルを作成し、html ファイルのヘッダーで読み込ませる。
+  <fieldset class="thm">
+    <legend>mathjax-config.js</legend>
+    <pre>
+<code class="language-css">
+  window.MathJax = {
+    loader: {load: ['[tex]/physics', '[tex]/mathtools', '[tex]/color']},
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      packages: { '[+]': ['physics', 'mathtools', 'color'] },
+      color: {
+        padding: '5px',
+        borderWidth: '2px',
+      },
+      macros: {
+        ds: "\\displaystyle",
+        C: '{\\mathbb C}',
+        R: '{\\mathbb R}',
+        Q: '{\\mathbb Q}',
+        Z: '{\\mathbb Z}',
+        bm: ['\\boldsymbol{#1}', 1],
+      },
+      tags: 'ams', /* 式番号を自動で振る */
+      processRefs: true, /* 数式モードの外の \ref{} にも数式へのリンクをつける */
+    },
+    svg: {
+      fontCache: 'global'
+    },
+    chtml: {
+      displayAlign: 'left', /* 数式を左寄せにする */
+      displayIndent: '2em',
+      mtextInheritFont: true, /* 数式中の \text{} を本文と同じフォントにする */
+    },
+    startup: {
+      ready: () => {
+        console.log('MathJax is loaded, but not yet initialized');
+        MathJax.startup.defaultReady();
+        console.log('MathJax is initialized, and the initial typeset is queued');
+        MathJax.startup.promise.then(() => {
+          console.log('MathJax initial typesetting complete');
+        });
+      }
+    }
+  };
+  
+  (function () {
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+    // script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.0/es5/latest?tex-mml-chtml.js';
+    script.async = true;
+    document.head.appendChild(script);
+  })();
+  
+</code>
+</pre>
+  </fieldset>
+
+  <h2>TikZJax とは</h2>
+  図を Web ブラウザ上で表示するオープンソース Javascript ライブラリ。TikZ と（一部）同じコマンドが使える。
+  <a href="https://github.com/kisonecat/tikzjax">TikZJax のレポジトリ</a><br>
+  <a href="https://tikzjax.com/">ホームページ</a>
+  <h2>表示例</h2>
+  <script type="text/tikz">
+  \begin{tikzpicture}[scale=2.5,transform shape,color=white]
+    % Draw axes
+    \draw [<->,thick] (0,2) node (yaxis) [above] {$y$}
+      |- (3,0) node (xaxis) [right] {$x$};
+    \draw (0,0) coordinate (a_1) -- (2,1.8) coordinate (a_2);
+    \draw (0,1.5) coordinate (b_1) -- (2.5,0) coordinate (b_2);
+    \coordinate (c) at (intersection of a_1--a_2 and b_1--b_2);
+    \draw[dashed] (yaxis |- c) node[left] {$y'$}
+        -| (xaxis -| c) node[below] {$x'$};
+    \fill[red] (c) circle (2pt);
+  \end{tikzpicture}
+  </script>
+  <h2>使い方</h2>
+  ヘッダ部分に以下のように書く。
+  <img src="tikzjax-header.png">
+  <h2>注意</h2>
+  <ul>
+    <li>
+      MathJax と TikZJax は異なるライブラリなので、MathJax で使える数式コマンドが TikZJax で使えるとは限らない。
+    </li>
+    <li>
+      TikZJax では TikZ のライブラリを自分で追加することができない。用意されているライブラリで描き切れないものは画像を用意して貼るしかないと思われる。
+    </li>
+  </ul>
+  
+  <h2>参考サイト</h2>
+  <a href="https://atatat.hatenablog.com/entry/2020/06/27/093000">Texによる数式表現23～MathJaxその他機能1</a><br>
+  <a href="https://atatat.hatenablog.com/entry/2020/06/29/003000">Texによる数式表現24～MathJaxその他機能2</a>
+</body>
+
+</html>
